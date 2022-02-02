@@ -141,9 +141,7 @@
         function fillsquares() {
             for (var y = 0; y < height; y++) {
                 for (var x = 0; x < width; x++) {
-                    if (x % 3 >= 1 && y % 3 >= 1) {
-                        grid[y][x] = 1;
-                     }
+                    grid[y][x] = x % 3 >= 1 && y % 3 >= 1;
                 }
             }
         }
