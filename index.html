@@ -15,6 +15,9 @@
     <button onclick="grid = makegrid(); stop(); draw()">Clear</button>
     <button onclick="fillrandom(); draw()">Random</button>
     <button onclick="fillsquares(); draw()">Squares</button>
+    <button onclick="loadrepeat(1); draw()">Repeat</button>
+    <button onclick="loadrepeat(0); draw()">Tight</button>
+    <button onclick="loadrepeat(2); draw()">Spaced</button>
     <br />
     <button onclick="savedata()">Croppy</button>
     <button onclick="loaddata()">Load</button>
@@ -125,6 +128,29 @@
             }
             draw();
         }
+		
+		function loadrepeat(spacing=1) {
+			if (!text.value) return;
+			grid = makegrid();
+            var gri = JSON.parse(text.value),
+                wio = gri[0].length,
+                heo = gri.length,
+                wid = wio + spacing,
+                hei = heo + spacing,
+				sgx = Math.floor(width / wid),
+				sgy = Math.floor(height / hei);
+			for (var sy = 0; sy < sgy; sy++) {
+                for (var sx = 0; sx < sgx; sx++) {
+					for (var y = 0; y < hei; y++) {
+						for (var x = 0; x < wid; x++) {
+							if (y >= heo || x >= wio) continue;
+							grid[sy * hei + y][sx * wid + x] = gri[y][x];
+						}
+					}
+				}
+			}
+			draw();
+		}
 
         function makegrid(wid, hei) {
             return Array.from({length: hei ? hei : height}, () => new Array(wid ? wid : width).fill(0))
